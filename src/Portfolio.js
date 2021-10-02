@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import Toolbar from './Toolbar';
 import jpg200 from './img/200.jpg';
 import codystretch from './img/codystretch.jpg';
