@@ -20,20 +20,23 @@ export default class Portfolio extends Component {
     super();
     this.state = {
       filters: ["All", "Websites", "Flayers", "Business Cards"],
-      selectedFilter: '',
-      onSelectFilter: (e) => {
-        let target = e.target;
-        [...target.closest('.btn_list').querySelectorAll('.btn_item')].forEach(el => el.classList.remove('active'));
-        target.classList.add('active');
-        let category = target.dataset.categoryBtn;
-        this.state.selectedFilter = category;
-        [...document.querySelectorAll('.img_item')].forEach(el => el.classList.remove('hidden'));
-        if (category === 'All') {
-          return
-        } else {
-          [...document.querySelectorAll(`.img_item>:not([data-category="${this.state.selectedFilter}"])`)].forEach(el => { el.closest('.img_item').classList.add('hidden')});
-        }
-      }
+      selectedFilter: 'All'
+    }
+    this.onSelectFilter = this.onSelectFilter.bind(this);
+  }
+
+  async onSelectFilter (e) {
+    let target = e.target;
+    [...target.closest('.btn_list').querySelectorAll('.btn_item')].forEach(el => el.classList.remove('active'));
+    target.classList.add('active');
+    let category = target.dataset.categoryBtn;
+    console.log(category);
+    await this.setState({selectedFilter: category});
+    [...document.querySelectorAll('.img_item')].forEach(el => el.classList.remove('hidden'));
+    if (category === 'All') {
+      return
+    } else {
+      [...document.querySelectorAll(`.img_item>:not([data-category="${this.state.selectedFilter}"])`)].forEach(el => { el.closest('.img_item').classList.add('hidden')});
     }
   }
 
@@ -44,7 +47,7 @@ export default class Portfolio extends Component {
         <Toolbar 
         filters={this.state.filters} 
         selected={this.state.selectedFilter}
-        onSelectFilter={this.state.onSelectFilter}></Toolbar>
+        onSelectFilter={this.onSelectFilter}></Toolbar>
         <ul className="img_list">
           <li className="img_item"><img src={jpg200} alt="img" className="img" data-category="Websites" /></li>
           <li className="img_item"><img src={codystretch} alt="img" className="img" data-category="Flayers"/></li>
